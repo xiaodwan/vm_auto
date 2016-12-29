@@ -74,7 +74,7 @@ class DogtailApp(object):
         # must add --no-fork, or popen.pid will change
         self._proc = subprocess.Popen(["python",
             os.path.join("/usr/share/virt-manager", "virt-manager"),
-            "--no-fork", "--connect", self.uri] +
+            "--no-fork", "--no-conn-autostart", "--connect", self.uri] +
             (extra_opts or []),
             stdout=file(os.devnull), stderr=file(os.devnull))
         time.sleep(1)

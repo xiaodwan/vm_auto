@@ -5,8 +5,9 @@ import sys
 import warnings
 import unittest
 
-from cases.storage import storageManagerTest
-from cases.installation import installationTest
+warnings.simplefilter("ignore")
+from testcases.storage import storageManagerTest
+from testcases.installation import installationTest
 
 # Dogtail is noisy with GTK and GI deprecation warnings
 warnings.simplefilter("ignore")
@@ -19,7 +20,7 @@ import dogtail.config
 
 
 # Turn off needlessly noisy debugging
-DOGTAIL_DEBUG = True
+DOGTAIL_DEBUG = False
 dogtail.config.config.logDebugToStdOut = DOGTAIL_DEBUG
 #dogtail.config.config.logDebugToFile = False
 
@@ -37,6 +38,9 @@ os.environ['LANG'] = 'en_US.UTF-8'
 
 if __name__ == '__main__':
     #suite = unittest.TestLoader().loadTestsFromTestCase(storageManagerTest)
-    suite = unittest.TestLoader().loadTestsFromTestCase(installationTest)
+    #suite = unittest.TestLoader().discover('./testcases', pattern='*.py')
+    #suite2 = unittest.TestLoader().loadTestsFromTestCase(storageManagerTest)
+    #suite = unittest.TestLoader().loadTestsFromTestCase(installationTest)
     #alltests = unittest.TestSuite([suite, suite2])
-    unittest.TextTestRunner(verbosity=2).run(suite)
+    #unittest.TextTestRunner(verbosity=2).run(suite)
+    print unittest.TestLoader().getTestCaseNames(storageManagerTest)
