@@ -5,7 +5,6 @@ import sys
 import warnings
 import unittest
 
-warnings.simplefilter("ignore")
 from testcases.storage import storageManagerTest
 from testcases.installation import installationTest
 

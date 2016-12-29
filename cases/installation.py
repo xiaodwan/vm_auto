@@ -8,7 +8,8 @@ from getpass import getuser
 from dogtail.utils import screenshot
 
 from utils.uiutils import *
-from utils.vmcheck import * from utils.env_config import *
+from utils.vmcheck import * 
+from utils.env_config import *
 
 if getuser() != 'root':
     DEFAULT_URI = 'qemu:///session'
