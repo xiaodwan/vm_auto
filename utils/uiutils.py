@@ -1,5 +1,4 @@
 import time
-import inspect
 import unittest
 
 # set to vmmlogger in order to prevent coding modifying 
@@ -8,16 +7,7 @@ import unittest
 from dogtail.logging import debugLogger as vmmlogger
 
 from utils.dogtailutils import *
-from utils.vmcheck import *
-
-#DEFAULT_TREE = "http://download.eng.pek2.redhat.com/pub/rhel/released/RHEL-7/7.3/Server/x86_64/os/"
-#DEFAULT_KICKSTART = "ks=http://fileshare.englab.nay.redhat.com/pub/section3/run/http-ks/ks-rhel7u3-x86_64.cfg"
-#GUEST_NAME = "rhel7.3_autotest"
-#OS_VERSION = "Red Hat Enterprise Linux 7.3"  # should be 7.3
-#DEFAULT_URI = "qemu:///system"
-
-def get_current_function_name():
-        return inspect.stack()[1][3]
+from utils.generalutils import *
 
 
 class vmmApp(DogtailApp):
