@@ -12,6 +12,7 @@ from utils.env_config import *
 from utils.logging import *
 from utils.uiutils import *
 from utils.dogtailutils import *
+from utils.generalutils import *
 
 DEFAULT_URI = get_default_uri()
 DEFAULT_CONNECTION = get_default_connection(DEFAULT_URI)

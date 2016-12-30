@@ -5,6 +5,8 @@ import sys
 import warnings
 import unittest
 
+from dogtail.logging import debugLogger as vmmlogger
+
 from testcases.storage import storageManagerTest
 from testcases.installation import installationTest
 from testcases.test import testTest 
@@ -22,6 +24,8 @@ import dogtail.config
 DOGTAIL_DEBUG = False
 dogtail.config.config.logDebugToStdOut = DOGTAIL_DEBUG
 #dogtail.config.config.logDebugToFile = False
+# if output test result to stdout
+STD_OUTPUT = False
 
 # Needed so labels are matched in english
 os.environ['LANG'] = 'en_US.UTF-8'
@@ -34,5 +38,15 @@ if __name__ == '__main__':
     #suite = unittest.TestLoader().loadTestsFromTestCase(installationTest)
     #alltests = unittest.TestSuite([suite, suite2])
     #unittest.TextTestRunner(verbosity=2).run(alltests)
-    unittest.TextTestRunner(verbosity=2).run(suite)
-    #print unittest.TestLoader().getTestCaseNames(storageManagerTest)
+    if STD_OUTPUT:
+        fp = sys.stderr
+    else:
+        fp = open('./vm_autotest_result.txt', 'ab+')
+
+    from datetime import datetime
+    fp.write('='*10 + " %s " % datetime.now() + '='*10 + '\n')
+    test_result = unittest.TextTestRunner(stream=fp, verbosity=2).run(suite)
+
+    if not STD_OUTPUT:
+        fp.close()
+

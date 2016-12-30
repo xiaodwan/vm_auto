@@ -6,6 +6,7 @@ import inspect
 import commands
 
 import xml.etree.ElementTree as ET
+from getpass import getuser
 
 VIRT_MANAGER_LOG = "~/.cache/virt-manager/virt-manager.log"
 

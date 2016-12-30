@@ -62,6 +62,9 @@ class testTest(unittest.TestCase):
         win_preferences.setconformation("ddDeleting storage", True)
         #win_preferences.setconformation()
         win_preferences.close_preferences()
+    @unittest.skip("skipped...")
+    def test_skiptest():
+        print 'hahah'
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
