@@ -317,9 +317,5 @@ def selecttab(root, tabname):
         vmmlogger.log("Error: failed to select tab : %s in node [%s]" % tabname, root)
         raise
 
-import traceback
-def exception_log(e):
-    bt = traceback.format_exc(e)
-    vmmlogger.log(bt)
 
 

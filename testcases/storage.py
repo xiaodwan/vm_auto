@@ -3,14 +3,13 @@ import unittest
 
 from getpass import getuser
 from dogtail.utils import screenshot
-from dogtail.logging import debugLogger as vmmlogger
-
-from utils.uiutils import exception_log
-from utils.env_config import *
+#from dogtail.logging import debugLogger as vmmlogger
 
 if __name__ == '__main__':
     sys.path.insert(0, '..')
 
+from utils.env_config import *
+from utils.logging import *
 from utils.uiutils import *
 from utils.dogtailutils import *
 
@@ -18,6 +17,9 @@ DEFAULT_URI = get_default_uri()
 DEFAULT_CONNECTION = get_default_connection(DEFAULT_URI)
 DEFAULT_PATH = get_default_img_path()
 DEFAULT_POOLNAME = "autotestdir"
+
+# Test case result
+DEFAULT_CASE_RESULT = "FAILED"
 
 if get_config_bool_value('debug', 'readcfgfromfile') is True:
     # get from config file
@@ -30,6 +32,7 @@ if get_config_bool_value('debug', 'readcfgfromfile') is True:
     DEFAULT_POOLNAME = get_config_value('storage_pool', 'name')
 
 else:
+    # Temporary change config when debugging a special case and don't worry about recovering configration files
     DEFAULT_TREE = "http://download.eng.pek2.redhat.com/pub/rhel/released/RHEL-7/7.3/Server/x86_64/os/"
     DEFAULT_KICKSTART = "ks=http://fileshare.englab.nay.redhat.com/pub/section3/run/http-ks/ks-rhel7u3-x86_64.cfg"
     # for auto version detecting
@@ -56,6 +59,9 @@ class storageManagerTest(unittest.TestCase):
         # RHEL7-13710
         # [Storage] Add storage pool- dir
         """
+        testcase_begin_log(get_current_function_name())
+        global DEFAULT_CASE_RESULT
+
         try:
             # Create a connect details window instance
             self.connc_details = vmmConnectionDetails(self.app)
@@ -77,6 +83,8 @@ class storageManagerTest(unittest.TestCase):
             self.assertEqual(name, DEFAULT_POOLNAME)
             self.assertEqual(autostart, "On Boot")
             self.assertEqual(location, DEFAULT_PATH + DEFAULT_POOLNAME)
+
+            DEFAULT_CASE_RESULT = "PASSED"
         except Exception as e:
             screenshot(get_current_function_name())
             exception_log(e)
@@ -84,6 +92,7 @@ class storageManagerTest(unittest.TestCase):
         finally:
             # clean created dir pool
             self.connc_details.del_pool(DEFAULT_POOLNAME)
+            testcase_finish_log(get_current_function_name(), DEFAULT_CASE_RESULT)
             
 
 if __name__ == '__main__':

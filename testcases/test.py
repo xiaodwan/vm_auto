@@ -1,15 +1,15 @@
+import sys
 from getpass import getuser
 from dogtail.utils import screenshot
-from dogtail.logging import debugLogger as vmmlogger
 
-from utils.uiutils import exception_log
-from utils.env_config import *
 
 if __name__ == '__main__':
     sys.path.insert(0, '..')
 
 from utils.uiutils import *
 from utils.dogtailutils import *
+from utils.logging import *
+from utils.env_config import *
 
 DEFAULT_URI = get_default_uri()
 DEFAULT_CONNECTION = get_default_connection(DEFAULT_URI)
@@ -33,6 +33,9 @@ else:
     OS_VERSION = "Red Hat Enterprise Linux 7.3"  
     GUEST_NAME = "rhel7.3_autotest"
 
+def getbug():
+    return 1
+
 class testTest(unittest.TestCase):
     """
     UI tests for virt-manager
@@ -49,6 +52,7 @@ class testTest(unittest.TestCase):
     ###### Test Cases ######
     # RHEL7-13710
     # [Storage] Add storage pool- dir
+    @unittest.skipIf(not check_bug_fixed(1397598), "Bug has not yet been fixed")
     def test_set_feedback(self):
         """ 
         # RHEL7-13710
@@ -60,4 +64,4 @@ class testTest(unittest.TestCase):
         win_preferences.close_preferences()
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(verbosity=2)
