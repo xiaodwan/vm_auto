@@ -1,0 +1,6 @@
+1. Add some options for convenient testing and debuging.
+    ./virtmanager-uitest.py -h
+    ./virtmanager-uitest.py --debug
+    ./virtmanager-uitest.py --verbose=[1|2]
+    ./virtmanager-uitest.py --acceptance-test
+    ./virtmanager-uitest.py --sign-off-test
