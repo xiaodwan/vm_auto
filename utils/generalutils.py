@@ -113,7 +113,7 @@ def get_default_connection(uri=None):
 def check_bug_fixed(bugid):
 
     url = "https://bugzilla.redhat.com/buglist.cgi?f1=bug_id&f2=bug_status&o1=equals&o2=anywords&query_format=advanced&v1=" + \
-          "%s" % bugid +"&v2=ON_QA%20VERIFIED%20RELEASE_PENDING%20CLOSED%20"
+          "%s" % bugid + "&v2=ON_QA%20VERIFIED%20RELEASE_PENDING%20CLOSED%20"
     f = urllib.urlopen(url)
     res = re.search("No results were found that matched your query", f.read())
     f.close()

@@ -54,6 +54,7 @@ class templateModuleTest(unittest.TestCase):
             raise
 
     ###### Test Cases ######
+    #@unittest.skipIf(not check_bug_fixed(xxxx), "Bug xxxx has not yet been fixed")
     def test_template_case(self):
         """ 
         # RHEL7-13710

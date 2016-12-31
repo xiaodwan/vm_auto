@@ -7,16 +7,16 @@ if __name__ == '__main__':
 from getpass import getuser
 from dogtail.utils import screenshot
 
-from utils.uiutils import *
-from utils.generalutils import * 
 from utils.env_config import *
+from utils.logging import *
+from utils.uiutils import *
+from utils.dogtailutils import *
+from utils.generalutils import *
 
-if getuser() != 'root':
-    DEFAULT_URI = 'qemu:///session'
-    DEFAULT_CONNECTION = 'QEMU/KVM User session'
-else:
-    DEFAULT_URI = 'qemu:///system'
-    DEFAULT_CONNECTION = 'QEMU/KVM'
+DEFAULT_URI = get_default_uri()
+DEFAULT_CONNECTION = get_default_connection(DEFAULT_URI)
+DEFAULT_PATH = get_default_img_path()
+DEFAULT_POOLNAME = "autotestdir"
 
 if get_config_bool_value('debug', 'readcfgfromfile') is True:
     # get from config file
@@ -25,22 +25,12 @@ if get_config_bool_value('debug', 'readcfgfromfile') is True:
     # for auto version detecting
     OS_VERSION = get_config_value('checkpoint', "osversion")
     GUEST_NAME = get_config_value('Installation', 'guestname')
-    DEFAULT_PATH = get_config_value('Installation', 'path')
-
 else:
     DEFAULT_TREE = "http://download.eng.pek2.redhat.com/pub/rhel/released/RHEL-7/7.3/Server/x86_64/os/"
     DEFAULT_KICKSTART = "ks=http://fileshare.englab.nay.redhat.com/pub/section3/run/http-ks/ks-rhel7u3-x86_64.cfg"
     # for auto version detecting
     OS_VERSION = "Red Hat Enterprise Linux 7.3"  
     GUEST_NAME = "rhel7.3_autotest"
-
-    if DEFAULT_URI == "qemu:///system":
-        DEFAULT_PATH = "/var/lib/libvirt/images/"
-    elif DEFAULT_URI == "qemu:///session":
-        if getuser() != 'root':
-            DEFAULT_PATH = "/home/" + getuser() +"/.local/share/libvirt/images/"
-        else:
-            DEFAULT_PATH = "/var/lib/libvirt/images/"
 
 """
 Installation Test
@@ -63,6 +53,8 @@ class installationTest(unittest.TestCase):
         # RHEL7-13827
         # [Install domain] Install vm from HTTP - qcow2	
         """
+        testcase_begin_log(get_current_function_name())
+        DEFAULT_CASE_RESULT = "FAILED"
         
         try:
             newvm_wizard = vmmAddNewVM(app=self.app)
@@ -117,10 +109,14 @@ class installationTest(unittest.TestCase):
             self.assertTrue(res)
 
             self.app.quit()
+
+            DEFAULT_CASE_RESULT = "PASSED"
         except Exception as e:
             screenshot(get_current_function_name())
             exception_log(e)
             raise
+        finally:
+            testcase_finish_log(get_current_function_name(), DEFAULT_CASE_RESULT)
 
             
 if __name__ == '__main__':
