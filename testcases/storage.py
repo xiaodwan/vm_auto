@@ -19,9 +19,6 @@ DEFAULT_CONNECTION = get_default_connection(DEFAULT_URI)
 DEFAULT_PATH = get_default_img_path()
 DEFAULT_POOLNAME = "autotestdir"
 
-# Test case result
-DEFAULT_CASE_RESULT = "FAILED"
-
 if get_config_bool_value('debug', 'readcfgfromfile') is True:
     # get from config file
     DEFAULT_TREE = get_config_value('Installation', 'url')
@@ -61,7 +58,7 @@ class storageManagerTest(unittest.TestCase):
         # [Storage] Add storage pool- dir
         """
         testcase_begin_log(get_current_function_name())
-        global DEFAULT_CASE_RESULT
+        DEFAULT_CASE_RESULT = "FAILED"
 
         try:
             # Create a connect details window instance

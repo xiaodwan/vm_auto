@@ -31,8 +31,8 @@ STD_OUTPUT = False
 os.environ['LANG'] = 'en_US.UTF-8'
 
 if __name__ == '__main__':
-    #suite = unittest.TestLoader().loadTestsFromTestCase(storageManagerTest)
-    suite = unittest.TestLoader().loadTestsFromTestCase(testTest)
+    suite = unittest.TestLoader().loadTestsFromTestCase(storageManagerTest)
+    #suite = unittest.TestLoader().loadTestsFromTestCase(testTest)
     #suite = unittest.TestLoader().discover('./testcases', pattern='*.py')
     #suite2 = unittest.TestLoader().loadTestsFromTestCase(storageManagerTest)
     #suite = unittest.TestLoader().loadTestsFromTestCase(installationTest)
